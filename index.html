@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Loan Frame Test</title>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="filter.css">
+   </head>
+<body>
+    <div ng-app="LoanFrame" ng-controller="LoanFrameController">
+		<div class="container">
+			<div class="top">
+				 <strong>Search</strong>: <input name="company" type="text" class="search-input" placeholder="Search in table" ng-model="query"/>
+			</div>
+				   
+			<section class="right" style="border-right:1px">
+				<div id="filter"  ng-init="pantsGroup = (players | groupBy:'pants')">
+					<div ng-repeat="Pants in pantsGroup" >
+						<b><input type="checkbox" ng-model="usepants[$index]"/>{{Pants}}</b>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<table class="table" id="playersTable">
+						<thead>
+							<tr>
+								<th>
+									<a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+										Name
+										<span class="glyphicon glyphicon-triangle-bottom" ng-show="sortType == 'name' && !sortReverse"></span>
+										<span class="glyphicon glyphicon-triangle-top" ng-show="sortType == 'name' && sortReverse" ></span>
+									</a>
+									<input type="text" class="search-input" placeholder="Search in Name" ng-model="name"/>
+									
+								</th>
+								<th>
+									<a href="#" ng-click="sortType = 'pants'; sortReverse = !sortReverse">
+										Pants
+										<span class="glyphicon glyphicon-triangle-bottom" ng-show="sortType == 'pants' && !sortReverse"></span>
+										<span class="glyphicon glyphicon-triangle-top" ng-show="sortType == 'pants' && sortReverse" ></span>
+									</a>
+									<input type="text" class="search-input" placeholder="Search in Pants" ng-model="pants"/>
+									<span class="glyphicon glyphicon-filter" id="filterIcon" ></span>
+								</th>
+								<th>
+									<a href="#" ng-click="sortType = 'shoes'; sortReverse = !sortReverse">
+										Shoes
+										<span class="glyphicon glyphicon-triangle-bottom" ng-show="sortType == 'shoes' && !sortReverse"></span>
+										<span class="glyphicon glyphicon-triangle-top" ng-show="sortType == 'shoes' && sortReverse" ></span>
+									</a>
+									<input type="text" class="search-input"  placeholder="Search in Shoes" ng-model="shoes"/>
+								</th>
+									
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="player in players | orderBy:sortType:sortReverse | filter:query | filter:name | filter:pants | filter:shoes | filter:filterPants(player)">
+								
+								<td>{{player.name}}</td>
+								<td>{{player.pants}}</td>
+								<td>{{player.shoes}}</td>
+									
+							</tr>
+						</tbody>
+					</table>
+				</div>      
+				
+				 <button ng-json-export-excel data="players" report-fields="{name: 'Name', pants: 'Pants Size', shoes: 'Shoe Size'}" filename="filename" class="btn-sm btn-primary">Export To Excel</button>
+			</section>
+		</div>
+    </div>
+    
+	<!-- Scripts-->
+	
+	  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	  <script src="FileSaver.js"></script>
+	  <script src="json-export-excel.js"></script>	
+    <script src="app.js"></script>
+    <script src="loanframeController.js"></script>
+
+    <script type="text/javascript">
+   
+        $(document).ready(function(){
+            
+            $("#filterIcon").click(function(){
+                //alert(1);
+                 $("#filter").toggle();
+            });
+            
+        })
+    
+    </script>
+</body>
+   
+</html>
