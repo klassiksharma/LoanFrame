@@ -1,0 +1,20 @@
+#filter{
+    width: 5%;
+    border-radius: 10px;
+    border: 2px solid black;
+    position: absolute;
+    left: 55%;
+    top: 13%;
+    padding: 10px;
+	display: none;
+}
+
+#filterIcon{
+	cursor: pointer;
+}
+section{
+	padding: 20px;
+}
+.top{
+	padding: 20px;
+}
